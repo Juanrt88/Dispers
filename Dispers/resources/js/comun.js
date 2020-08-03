@@ -12,13 +12,23 @@ if (document.getElementById('app')) {
     
 }
 
+if (document.getElementById('apiproduct')) {
+    require('./admin/apiproduct');
+}
+
 if (document.getElementById('apicategory')) {
     require('./admin/apicategory');
 }
 
+if (document.getElementById('apiuser')) {
+    require('./admin/apiuser');
+}
 
 
 if (document.getElementById('confirmareliminar')) {
     require('./confirmareliminar');
 }
 
+// if (document.getElementById('api_search_autocomplete')) {
+//     require('./admin/api_search_autocomplete');
+// }

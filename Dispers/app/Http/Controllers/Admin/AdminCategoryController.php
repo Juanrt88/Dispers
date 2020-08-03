@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Category;
-use App\Product;
+
 class AdminCategoryController extends Controller
 {
     /**
@@ -13,7 +13,7 @@ class AdminCategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-/**
+/*
     public function __construct() {
 
         $this->middleware('auth');
@@ -22,7 +22,7 @@ class AdminCategoryController extends Controller
     */
     public function index(Request $request)
     {
-       $nombre = $request->get('nombre');
+        $nombre = $request->get('nombre');
         $categorias = Category::where('nombre','like',"%$nombre%")->orderBy('nombre')->paginate(4);
         return view('admin.category.index',compact('categorias'));
     }
@@ -104,6 +104,7 @@ class AdminCategoryController extends Controller
         $cat->fill($request->all())->save();
        //return $request;
        return redirect()->route('admin.category.index')->with('datos','Registro actualizado correctamente!');
+    
     }
 
     /**

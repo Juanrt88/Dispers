@@ -1,26 +1,21 @@
 @extends('admin.system.admin')
 @section('titulo', 'Administración de Categorías')
-
 @section('breadcrumb')
   <li class="breadcrumb-item active">@yield('titulo')</li>
 @endsection
-
-
 @section('contenido')
 
 
 
+
+
 <div id="confirmareliminar" class="row">
-
-  
-
   <span style="display:none;" id="urlbase">{{route('admin.category.index')}}</span>
   @include('custom.modal_eliminar')
     <div class="col-12">
       <div class="card">
         <div class="card-header">
           <h3 class="card-title">Sección de categorías</h3>
-
           <div class="card-tools">
             
             <form>              
@@ -65,7 +60,7 @@
                         <td> {{$categoria->created_at }} </td>
                         <td> {{$categoria->updated_at }} </td>
 
-                        <td> <a class="btn btn-default"  
+                        <td> <a class="btn btn-warning"  
                             href="{{ route('admin.category.show',$categoria->slug) }}">Ver</a>
                         </td>
 
@@ -93,7 +88,4 @@
     </div>
   </div>
   <!-- /.row -->
-
-
-
- @endsection    
+ @endsection   

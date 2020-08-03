@@ -5,17 +5,24 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>@yield('titulo')
   </title>
-  <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="http://dispers.test/adminlte/plugins/fontawesome-free/css/all.min.css">
-  <!-- Ionicons -->
-  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-  <!-- overlayScrollbars -->
-  <link rel="stylesheet" href="http://dispers.test/adminlte/dist/css/adminlte.min.css">
-  <!-- Google Font: Source Sans Pro -->
-  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <meta name="csrf-token" content="{{ csrf_token()}}">
+      <link href="{!! asset('css/app.css') !!}" rel="stylesheet">
+  
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href={!! asset('adminlte/plugins/fontawesome-free/css/all.min.css') !!}>
+     <!-- sweetalert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href={!! asset('adminlte/dist/css/adminlte.min.css') !!}>
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    @yield('estilos')  
+    <!-- VUE -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+  
 </head>
 <body class="hold-transition sidebar-mini">
 
@@ -29,7 +36,7 @@
         <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-  
+        <a  href="{{ route('admin')}}" class="nav-link">Home</a>
       </li>
     </ul>
 
@@ -82,20 +89,23 @@
   <!-- Contenedor Principal -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="http://dispers.test/adminlte/index3.html" class="brand-link">
-      <img src="http://dispers.test/adminlte/dist/img/AdminLTELogo.png"
+
+    <a href="{{ route('admin')}}" class="brand-link">
+
+      {{-- <img src="{{URL::asset('/images/admin/AdminLTELogo.png')}}" 
            alt="AdminLTE Logo"
            class="brand-image img-circle elevation-3"
-           style="opacity: .8">
-      <span class="brand-text font-weight-light"> Dispers</span>
+           style="opacity: .8"> --}}
+      <span class="brand-text font-weight-light" style="margin-right: 10px;margin-left: 10px;"> <strong>Administración</strong></span>
+      <i class="fas fa-wrench"></i>
     </a>
 
     <!-- Sidebar Usuario Administrador  -->
     <div class="sidebar">
       <!-- Sidebar user (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">
-          <img src="http://dispers.test/adminlte/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+        <div class=" img-circle elevation-2" style="background-color: #ffffff;" >
+          <img  src="{{URL::asset('/images/admin/admin.png')}}"  class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
           <a href="#" class="d-block">Usuario ID</a>
@@ -147,14 +157,14 @@
                </a>
                <ul class="nav nav-treeview">
                  <li class="nav-item">
-                   <a href="{{ route('admin.category.index')}}" class="nav-link">
-                     <i class="far fa-circle nav-icon"></i>
+                   <a href="{{ route('admin.product.index')}}" class="nav-link">
+                     <i class="far fa-circle nav-icon text-info"></i>
                      <p>Lista de Productos</p>
                    </a>
                  </li>
                  <li class="nav-item">
-                   <a href="{{ route('admin.category.create')}}" class="nav-link">
-                     <i class="far fa-circle nav-icon"></i>
+                   <a href="{{ route('admin.product.create')}}" class="nav-link">
+                     <i class="far fa-circle nav-icon text-danger"></i>
                      <p>Crear Producto</p>
                    </a>
                  </li>
@@ -200,14 +210,14 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="{{ route('admin.category.index')}}" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
+                  <a href="{{ route('admin.user.index')}}" class="nav-link">
+                    <i class="far fa-circle nav-icon text-info"></i>
                     <p>Lista de Usuarios</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="{{ route('admin.category.create')}}" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
+                  <a href="{{ route('admin.user.create')}}" class="nav-link">
+                    <i class="far fa-circle nav-icon text-danger"></i>
                     <p>Agregar Admin</p>
                   </a>
                 </li>
@@ -336,15 +346,16 @@
 </div>
 <!-- ./wrapper -->
 
-<!-- jQuery -->
-<script src="http://dispers.test/adminlte/plugins/jquery/jquery.min.js"></script>
-<!-- Bootstrap 4 -->
-<script src="http://dispers.test/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- AdminLTE App -->
-<script src="http://dispers.test/adminlte/dist/js/adminlte.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="http://dispers.test/adminlte/dist/js/demo.js"></script>
-
 <script src="{{ asset('js/app_admin.js') }}" defer></script>
+
+<!-- jQuery -->
+<script src="{{ URL::asset('adminlte/plugins/jquery/jquery.min.js')}}"></script>
+<!-- Bootstrap 4 -->
+<script src="{{ URL::asset('adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+<!-- AdminLTE App -->
+<script src="{{ URL::asset('adminlte/dist/js/adminlte.min.js')}}"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="{{ URL::asset('adminlte/dist/js/demo.js')}}"></script>
+@yield('scripts')
 </body>
 </html>

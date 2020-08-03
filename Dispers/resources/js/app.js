@@ -4,7 +4,8 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./tienda/bootstrap');
+require('./bootstrap');
+
 
 require('./comun');
-
+//require('./confirmareliminar');

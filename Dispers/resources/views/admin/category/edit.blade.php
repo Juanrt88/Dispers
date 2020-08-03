@@ -2,9 +2,7 @@
 @section('titulo', 'Editar Categoría')
 
 
-
 @section('contenido')
-
 
 
 <div id="apicategory">
@@ -12,11 +10,10 @@
       @csrf
       @method('PUT')
 
-
-      
-
-      <span style="display:none;" id="editar">{{ $editar }}</span>
+      <span style="display:none;" id="editar">{{ $editar }}</span>  
       <span style="display:none;" id="nombretemp">{{ $cat->nombre}}</span>
+
+
       <!-- Default box -->
       <div class="card">
         <div class="card-header">
@@ -34,19 +31,20 @@
                 
                     
                     <div class="form-group">
+
                         <label for="nombre">Nombre</label>
                         <input v-model="nombre" 
-    
                             @blur="getCategory" 
                             @focus = "div_aparecer= false"
-                        
                         class="form-control" type="text" name="nombre" id="nombre" value="{{ $cat->nombre }} ">
+                        
                         <label for="slug">Slug</label>
                         <input readonly v-model="generarSLug"  class="form-control" type="text" name="slug" id="slug" value="{{ $cat->slug }} ">
                         <div v-if="div_aparecer" v-bind:class="div_clase_slug">
                            @{{ div_mensajeslug }}
                         </div>
                         <br v-if="div_aparecer">
+                       
                         <label for="descripcion">Descripción</label>
                         <textarea class="form-control" name="descripcion" id="descripcion" cols="30" rows="5">  {{ $cat->descripcion }}  </textarea>
                         
@@ -69,4 +67,4 @@
               </form>
           </div>
 
- @endsection     
+ @endsection    

@@ -1,3 +1,4 @@
+
 const confirmareliminar = new Vue({
     el: '#confirmareliminar',
     data: {

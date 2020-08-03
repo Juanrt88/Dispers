@@ -14664,6 +14664,214 @@ var apicategory = new Vue({
 
 /***/ }),
 
+/***/ "./resources/js/admin/apiproduct.js":
+/*!******************************************!*\
+  !*** ./resources/js/admin/apiproduct.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var apiproduct = new Vue({
+  el: '#apiproduct',
+  data: {
+    nombre: '',
+    slug: '',
+    div_mensajeslug: 'Slug Existe',
+    div_clase_slug: 'badge badge-danger',
+    div_aparecer: false,
+    deshabilitar_boton: 1,
+    //variables de precios
+    precio: 0,
+    peso: 0
+  },
+  computed: {
+    generarSLug: function generarSLug() {
+      var _char = {
+        "á": "a",
+        "é": "e",
+        "í": "i",
+        "ó": "o",
+        "ú": "u",
+        "Á": "A",
+        "É": "E",
+        "Í": "I",
+        "Ó": "O",
+        "Ú": "U",
+        "ñ": "n",
+        "Ñ": "N",
+        " ": "-",
+        "_": "-"
+      };
+      var expr = /[áéíóúÁÉÍÓÚÑñ_ ]/g;
+      this.slug = this.nombre.trim().replace(expr, function (e) {
+        return _char[e];
+      }).toLowerCase();
+      return this.slug; //return this.nombre.trim().replace(/ /g,'-').toLowerCase()
+    }
+  },
+  methods: {
+    eliminarimagen: function eliminarimagen(imagen) {
+      //console.log(imagen);
+      Swal.fire({
+        title: '¿Estas seguro de eliminar la imagen ' + imagen.id + '?',
+        text: "¡No podrás revertir esto!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: '¡Si, Eliminar!',
+        cancelButtonText: 'Cancelar'
+      }).then(function (result) {
+        if (result.value) {
+          var url = '/api/eliminarimagen/' + imagen.id;
+          axios["delete"](url).then(function (response) {
+            console.log(response.data);
+          }); //eliminar el elemento
+
+          var elemento = document.getElementById('idimagen-' + imagen.id); //console.log(elemento);
+
+          elemento.parentNode.removeChild(elemento);
+          Swal.fire('¡Eliminado!', 'La imagen ha sido eliminada', 'success');
+        }
+      });
+    },
+    getProduct: function getProduct() {
+      var _this = this;
+
+      if (this.slug) {
+        var url = '/api/product/' + this.slug;
+        axios.get(url).then(function (response) {
+          _this.div_mensajeslug = response.data;
+
+          if (_this.div_mensajeslug === "Slug Disponible") {
+            _this.div_clase_slug = 'badge badge-success';
+            _this.deshabilitar_boton = 0;
+          } else {
+            _this.div_clase_slug = 'badge badge-danger';
+            _this.deshabilitar_boton = 1;
+          }
+
+          _this.div_aparecer = true;
+
+          if (data.datos.nombre) {
+            if (data.datos.nombre === _this.nombre) {
+              _this.deshabilitar_boton = 0;
+              _this.div_mensajeslug = '';
+              _this.div_clase_slug = '';
+              _this.div_aparecer = false;
+            }
+          }
+        });
+      } else {
+        this.div_clase_slug = 'badge badge-danger';
+        this.div_mensajeslug = "Debes escribir un producto";
+        this.deshabilitar_boton = 1;
+        this.div_aparecer = true;
+      }
+    }
+  },
+  mounted: function mounted() {
+    if (data.editar == 'si') {
+      this.nombre = data.datos.nombre;
+      this.precio = data.datos.precio;
+      this.peso = data.datos.peso;
+      this.deshabilitar_boton = 0;
+    }
+
+    console.log(data);
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/admin/apiuser.js":
+/*!***************************************!*\
+  !*** ./resources/js/admin/apiuser.js ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var apiuser = new Vue({
+  el: '#apiuser',
+  data: {
+    nickname: '',
+    slug: '',
+    div_mensajeslug: 'Slug Existe',
+    div_clase_slug: 'badge badge-danger',
+    div_aparecer: false,
+    deshabilitar_boton: 1
+  },
+  computed: {
+    generarSLug: function generarSLug() {
+      var _char = {
+        "á": "a",
+        "é": "e",
+        "í": "i",
+        "ó": "o",
+        "ú": "u",
+        "Á": "A",
+        "É": "E",
+        "Í": "I",
+        "Ó": "O",
+        "Ú": "U",
+        "ñ": "n",
+        "Ñ": "N",
+        " ": "-",
+        "_": "-"
+      };
+      var expr = /[áéíóúÁÉÍÓÚÑñ_ ]/g;
+      this.slug = this.nickname.trim().replace(expr, function (e) {
+        return _char[e];
+      }).toLowerCase();
+      return this.slug; //return this.nombre.trim().replace(/ /g,'-').toLowerCase()
+    }
+  },
+  methods: {
+    getUser: function getUser() {
+      var _this = this;
+
+      if (this.slug) {
+        var url = '/api/user/' + this.slug;
+        axios.get(url).then(function (response) {
+          _this.div_mensajeslug = response.data;
+
+          if (_this.div_mensajeslug === "Slug Disponible") {
+            _this.div_clase_slug = 'badge badge-success';
+            _this.deshabilitar_boton = 0;
+          } else {
+            _this.div_clase_slug = 'badge badge-danger';
+            _this.deshabilitar_boton = 1;
+          }
+
+          _this.div_aparecer = true;
+
+          if (document.getElementById('editar')) {
+            if (document.getElementById('nombretemp').innerHTML === _this.nickname) {
+              _this.deshabilitar_boton = 0;
+              _this.div_mensajeslug = '';
+              _this.div_clase_slug = '';
+              _this.div_aparecer = false;
+            }
+          }
+        });
+      } else {
+        this.div_clase_slug = 'badge badge-danger';
+        this.div_mensajeslug = "Debes escribir un usuario";
+        this.deshabilitar_boton = 1;
+        this.div_aparecer = true;
+      }
+    }
+  },
+  mounted: function mounted() {
+    if (document.getElementById('editar')) {
+      this.nickname = document.getElementById('nombretemp').innerHTML;
+      this.deshabilitar_boton = 0;
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./resources/js/app_admin.js":
 /*!***********************************!*\
   !*** ./resources/js/app_admin.js ***!
@@ -14674,7 +14882,7 @@ var apicategory = new Vue({
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
-__webpack_require__(/*! ./comun */ "./resources/js/comun.js");
+__webpack_require__(/*! ./comun */ "./resources/js/comun.js"); //require('./confirmareliminar');
 
 /***/ }),
 
@@ -14763,13 +14971,23 @@ if (document.getElementById('app')) {
   });
 }
 
+if (document.getElementById('apiproduct')) {
+  __webpack_require__(/*! ./admin/apiproduct */ "./resources/js/admin/apiproduct.js");
+}
+
 if (document.getElementById('apicategory')) {
   __webpack_require__(/*! ./admin/apicategory */ "./resources/js/admin/apicategory.js");
 }
 
+if (document.getElementById('apiuser')) {
+  __webpack_require__(/*! ./admin/apiuser */ "./resources/js/admin/apiuser.js");
+}
+
 if (document.getElementById('confirmareliminar')) {
   __webpack_require__(/*! ./confirmareliminar */ "./resources/js/confirmareliminar.js");
-}
+} // if (document.getElementById('api_search_autocomplete')) {
+//     require('./admin/api_search_autocomplete');
+// }
 
 /***/ }),
 
